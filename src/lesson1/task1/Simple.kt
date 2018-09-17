@@ -110,10 +110,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int {
-    val n = (number % 1000) / 100
-    return n
-}
+fun thirdDigit(number: Int): Int  = (number % 1000) / 100
 
 /**
  * Простая
@@ -148,8 +145,8 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  */
 fun numberRevert(number: Int): Int {
     val a = number / 100
-    val b = (number - a * 100) / 10
-    val c = (number - 10 * b) - (100 * a)
+    val b = number % 100 / 10
+    val c = number % 10
     return 100 * c + 10 * b + a
 
 }
