@@ -123,9 +123,9 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int = when {
-    ((kingX == rookX) || (kingY == rookY) && (abs(kingY - bishopY) != abs(kingX - bishopX))) -> 1
-    ((kingX != rookX) && (kingY != rookY) && (abs(kingY - bishopY) == abs(kingX - bishopX))) -> 2
     ((kingX == rookX) || (kingY == rookY) && (abs(kingY - bishopY) == abs(kingX - bishopX))) -> 3
+    ((kingX != rookX) && (kingY != rookY) && (abs(kingY - bishopY) == abs(kingX - bishopX))) -> 2
+    ((kingX == rookX) || (kingY == rookY) && (abs(kingY - bishopY) != abs(kingX - bishopX))) -> 1
     else -> 0
 }
 
@@ -152,7 +152,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Средняя
  *
  * Даны четыре точки на одной прямой: A, B, C и D.
- * Координаты точек a, b, c, d соответственно, b >= a, d >= c.
+ * Координаты точек a, b, c, d соответственно, b >= a, d >= c
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
