@@ -5,10 +5,7 @@ import jdk.nashorn.internal.runtime.JSType.toDouble
 import lesson1.task1.sqr
 import java.lang.Math.pow
 import java.lang.Math.toIntExact
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Пример
@@ -76,11 +73,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var a = 0
     var number = n
-    if (number == 0) return 1
-    while (number > 0) {
+    do {
         a++
         number /= 10
-    }
+    } while (number != 0)
     return a
 }
 
@@ -156,12 +152,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var k = 0
-    if (n == Int.MAX_VALUE) return false
-    while (sqr(k + 1) <= n) k++
-    return (sqr(k) >= m)
-}
+fun squareBetweenExists(m: Int, n: Int): Boolean = floor(sqrt(n.toDouble())) >= ceil(sqrt(m.toDouble()))
 
 /**
  * Средняя
@@ -198,16 +189,14 @@ fun collatzSteps(x: Int): Int {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double {
-    var n = 1
-    var s = 0.0
-    var a = 1.0
-    val b = x % (PI * 2)
-    while (abs(a) > eps) {
-        a = pow(-1.0, toDouble(n) + 1) * pow(b, 2 * toDouble(n) - 1) / factorial(2 * n - 1)
-        s += a
-        n++
+    val a = abs(x % (PI * 2))
+    var b = a
+    for (n in 1..Int.MAX_VALUE) {
+        if (pow(a, (2 * n + 1).toDouble()) / factorial(2 * n + 1) < eps)
+            break
+        b += (pow(-1.0, n.toDouble()) * pow(a, (2 * n + 1).toDouble()) / factorial(2 * n + 1))
     }
-    return s
+    return b
 }
 
 /**
@@ -218,14 +207,14 @@ fun sin(x: Double, eps: Double): Double {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    var n = 0.0
-    var s = 0.0
-    val b = x % (PI * 2)
-    while (abs(pow(-1.0, n) * pow(b, 2 * n) / (factorial(2 * n.toInt()))) > eps) {
-        s += (pow(-1.0, n) * pow(b, 2 * n) / (factorial(2 * n.toInt())))
-        n++
+    val a = abs(x % (PI * 2))
+    var b = 1.0
+    for (n in 1..Int.MAX_VALUE) {
+        if (pow(a, (2 * n).toDouble()) / factorial(2 * n) < eps)
+            break
+        b += (pow(-1.0, n.toDouble()) * pow(a, (2 * n).toDouble()) / factorial(2 * n))
     }
-    return s
+    return b
 }
 
 /**
