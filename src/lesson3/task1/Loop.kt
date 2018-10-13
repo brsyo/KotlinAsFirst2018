@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson3.task1
 
 import jdk.nashorn.internal.runtime.JSType.toDouble
@@ -42,7 +43,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -181,6 +182,9 @@ fun collatzSteps(x: Int): Int {
     return b
 }
 
+//
+fun vsp(n: Double) = pow(-1.0, n)
+
 /**
  * Средняя
  *
@@ -192,9 +196,11 @@ fun sin(x: Double, eps: Double): Double {
     val a = abs(x % (PI * 2))
     var b = a
     for (n in 1..Int.MAX_VALUE) {
-        if (pow(a, (2 * n + 1).toDouble()) / factorial(2 * n + 1) < eps)
+        val c = pow(a, (2 * n + 1).toDouble())
+        val fac = factorial(2 * n + 1)
+        if (c / fac < eps)
             break
-        b += (pow(-1.0, n.toDouble()) * pow(a, (2 * n + 1).toDouble()) / factorial(2 * n + 1))
+        b += (vsp(n.toDouble()) * c / fac)
     }
     return b
 }
@@ -210,9 +216,11 @@ fun cos(x: Double, eps: Double): Double {
     val a = abs(x % (PI * 2))
     var b = 1.0
     for (n in 1..Int.MAX_VALUE) {
-        if (pow(a, (2 * n).toDouble()) / factorial(2 * n) < eps)
+        val c = pow(a, (2 * n).toDouble())
+        val fac = factorial(2 * n)
+        if (c / fac < eps)
             break
-        b += (pow(-1.0, n.toDouble()) * pow(a, (2 * n).toDouble()) / factorial(2 * n))
+        b += (vsp(n.toDouble()) * c / fac)
     }
     return b
 }
@@ -265,7 +273,17 @@ fun hasDifferentDigits(n: Int): Boolean = digitCountInNumber(n, n % 10) != digit
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var lenght = 0
+    var num = 1
+    var numSqr = 0
+    while (lenght < n) {
+        numSqr = sqr(num)
+        lenght += digitNumber(numSqr)
+        num++
+    }
+    return (numSqr / pow(10.0, (lenght - n).toDouble()) % 10).toInt()
+}
 
 /**
  * Сложная
@@ -276,4 +294,14 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var lenght = 0
+    var num  = 1
+    var numFib = 0
+    while (lenght < n) {
+        numFib = fib(num)
+        lenght += digitNumber(numFib)
+        num++
+    }
+    return (numFib / pow(10.0, (lenght - n).toDouble()) % 10).toInt()
+}
