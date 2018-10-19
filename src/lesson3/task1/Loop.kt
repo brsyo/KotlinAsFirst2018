@@ -196,9 +196,9 @@ fun sin(x: Double, eps: Double): Double {
     val a = x % (PI * 2)
     var b = 1.0
     var z = 0.0
-    var o = 1
+    var o = 1.0
     while (abs(b) > abs(eps)) {
-        b = pow(-1.0, o.toDouble() + 1) * pow(a, 2 * o.toDouble() - 1) / factorial(2 * o - 1)
+        b = pow(-1.0, o + 1) * pow(a, 2 * o - 1) / factorial(2 * o.toInt() - 1)
         z += b
         o++
     }
