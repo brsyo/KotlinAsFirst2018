@@ -175,8 +175,8 @@ fun collatzSteps(x: Int): Int {
     var a = x
     var b = 0
     while (a > 1) {
-        if (a % 2 == 0) a = (a / 2)
-        else a = (a * 3) + 1
+        a = if (a % 2 == 0) (a / 2)
+        else (a * 3) + 1
         b++
     }
     return b
@@ -193,16 +193,16 @@ fun vsp(n: Double) = pow(-1.0, n)
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double {
-    val a = abs(x % (PI * 2))
-    var b = a
-    for (n in 1..Int.MAX_VALUE) {
-        val c = pow(a, (2 * n + 1).toDouble())
-        val fac = factorial(2 * n + 1)
-        if (c / fac < eps)
-            break
-        b += (vsp(n.toDouble()) * c / fac)
+    val a = x % (PI * 2)
+    var b = 1.0
+    var z = 0.0
+    var o = 1
+    while (abs(b) > abs(eps)) {
+        b = pow(-1.0, o.toDouble() + 1) * pow(a, 2 * o.toDouble() - 1) / factorial(2 * o - 1)
+        z += b
+        o++
     }
-    return b
+    return z
 }
 
 /**
@@ -213,16 +213,16 @@ fun sin(x: Double, eps: Double): Double {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    val a = abs(x % (PI * 2))
+    val a = x % (PI * 2)
     var b = 1.0
-    for (n in 1..Int.MAX_VALUE) {
-        val c = pow(a, (2 * n).toDouble())
-        val fac = factorial(2 * n)
-        if (c / fac < eps)
-            break
-        b += (vsp(n.toDouble()) * c / fac)
+    var z = 0.0
+    var o = 0.0
+    while (abs(b) > abs(eps)) {
+        b = pow(-1.0, o) * pow(a, 2 * o) / factorial(2 * o.toInt())
+        z += b
+        o++
     }
-    return b
+return z
 }
 
 /**
