@@ -182,8 +182,6 @@ fun collatzSteps(x: Int): Int {
     return b
 }
 
-//
-fun vsp(n: Double) = pow(-1.0, n)
 
 /**
  * Средняя
@@ -198,7 +196,7 @@ fun sin(x: Double, eps: Double): Double {
     var z = 0.0
     var o = 1.0
     while (abs(b) > abs(eps)) {
-        b = pow(-1.0, o + 1) * pow(a, 2 * o - 1) / factorial(2 * o.toInt() - 1)
+        b = pow(a, o + 1) * pow(a, 2 * o - 1) / factorial(2 * o.toInt() - 1)
         z += b
         o++
     }
@@ -222,7 +220,7 @@ fun cos(x: Double, eps: Double): Double {
         z += b
         o++
     }
-return z
+    return z
 }
 
 /**
@@ -296,7 +294,7 @@ fun squareSequenceDigit(n: Int): Int {
  */
 fun fibSequenceDigit(n: Int): Int {
     var lenght = 0
-    var num  = 1
+    var num = 1
     var numFib = 0
     while (lenght < n) {
         numFib = fib(num)
