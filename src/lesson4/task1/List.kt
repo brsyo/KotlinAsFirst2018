@@ -165,7 +165,11 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var n = 0.0
-    for (i in 0 until p.size) n += (pow(x, i * 1.0) * p[i])
+    var a = 1.0
+    for (i in 0 until p.size) {
+        n += p[i] * a
+        a *= x
+    }
     return n
 }
 
@@ -180,10 +184,8 @@ fun polynom(p: List<Double>, x: Double): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
-    var n = 0.0
-    for (i in 0 until list.size) {
-        list[i] += n
-        n = list[i]
+    for (i in 1 until list.size) {
+        list[i] += list[i - 1]
     }
     return list
 }
@@ -242,7 +244,8 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String = n.toString(radix = base)
+fun convertToString(n: Int, base: Int): String = convert(n, base).joinToString(separator = "")
+{ if (it >= 10) ('a' + it - 10).toString() else "$it" }
 
 /**
  * Средняя
@@ -254,7 +257,7 @@ fun convertToString(n: Int, base: Int): String = n.toString(radix = base)
 fun decimal(digits: List<Int>, base: Int): Int {
     var n = 0.0
     for (i in 0 until digits.size)
-        n += (digits[i] * pow(base.toDouble(), ((digits.size - 1 - i).toDouble())))
+        n += digits[i] * pow(base.toDouble(), ((digits.size - 1 - i).toDouble()))
     return n.toInt()
 }
 
@@ -267,7 +270,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun vsp(i: Char): Int = when (i) { in '0'..'9' -> i - '0'
+fun vsp(i: Char): Int = when (i) {
+    in '0'..'9' -> i - '0'
     else -> i - 'a' + 10
 }
 
