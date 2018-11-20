@@ -257,7 +257,7 @@ fun convertToString(n: Int, base: Int): String = convert(n, base).joinToString(s
 fun decimal(digits: List<Int>, base: Int): Int {
     var n = 0.0
     for (i in 0 until digits.size)
-        n += digits[i] * pow(base.toDouble(), ((digits.size - 1 - i).toDouble()))
+        n += digits[i] * pow(base.toDouble(), (digits.size - 1 - i).toDouble())
     return n.toInt()
 }
 
