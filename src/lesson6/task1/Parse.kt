@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 /**
  * Пример
  *
@@ -71,7 +73,21 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+val ms = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
+        "июля", "августа", "сентября", "октября", "ноября", "декабря")
+
+fun dateStrToDigit(str: String): String {
+    try {
+        val parts = str.split(" ")
+        val d = parts.first().toInt()
+        val m = ms.indexOf(parts[1]) + 1
+        val y = parts.last().toInt()
+        if (d > daysInMonth(m, y) || m == 0) return ""
+        return String.format("%02d.%02d.%d", d, m, y)
+    } catch (e: Exception) {
+        return ("")
+    }
+}
 
 /**
  * Средняя
@@ -83,8 +99,20 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
-
+fun dateDigitToStr(digital: String): String {
+    try {
+        val parts = digital.split(".")
+        if (parts.size != 3) return ""
+        val d = parts.first().toInt()
+        val om = parts[1].toInt()
+        val m = ms[om - 1]
+        val y = parts.last().toInt()
+        if (d > daysInMonth(om, y)) return ""
+        return String.format("%d %s %d", d, m, y)
+    } catch (e: Exception) {
+        return ""
+    }
+}
 /**
  * Средняя
  *
