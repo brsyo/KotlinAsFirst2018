@@ -96,11 +96,12 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
     val a = mapA.toMutableMap()
-    for ((key, value) in mapB)
-        if (mapA.containsKey(key) && mapA[key] != value) {
-            val list = listOf(mapA[key], mapB[key]).joinToString()
-            a[key] = list
+    for ((key, value) in mapB) {
+        val na = a[key]
+        if (na != null && mapA[key] != value) {
+            a[key] = "$na, ${mapB[key]}"
         } else a[key] = value
+    }
     return a
 }
 
@@ -114,7 +115,8 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = grades.toList().groupBy({ it.second }, { it.first })
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> =
+        grades.toList().groupBy({ it.second }, { it.first })
 
 /**
  * Простая
@@ -233,7 +235,8 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean =
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = list.groupingBy { it }.eachCount().filter { it.value > 1 }
+fun extractRepeats(list: List<String>): Map<String, Int> =
+        list.groupingBy { it }.eachCount().filter { it.value > 1 }
 
 /**
  * Средняя
@@ -263,7 +266,16 @@ fun hasAnagrams(words: List<String>): Boolean = words.size != words.map { it.toL
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val a = mutableMapOf<Int, Int>()
+    for ((key, value) in list.withIndex()) {
+        val r = number - value
+        val na = a[r]
+        if (na == null) a[value] = key
+        else return na to key
+    }
+    return Pair(-1, -1)
+}
 
 /**
  * Очень сложная
